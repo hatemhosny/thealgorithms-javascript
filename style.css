@@ -12,3 +12,7 @@ a {
 #container {
   height: 90vh;
 }
+#footer {
+  font-size: small;
+  margin: 1em;
+}

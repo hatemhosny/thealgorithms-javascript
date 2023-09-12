@@ -1,15 +1,27 @@
-<h1>
-  The Algorithms - JavaScript (<a
-    href="https://github.com/TheAlgorithms/JavaScript"
-    target="_blank"
-    >Source</a
-  >)
-</h1>
+<h1>The Algorithms - JavaScript Playground</h1>
 <p>
   Algorithm:
   <select id="algorithm-select"></select>
+  <br />
+  (<a href="https://github.com/TheAlgorithms/JavaScript" target="_blank"
+    >Source</a
+  >)
 </p>
 <div id="container" style="height: 80vh"></div>
+
+<div id="footer">
+  This page was
+  <a
+    href="https://livecodes.io/?x=https://github.com/hatemhosny/thealgorithms-javascript/tree/gh-pages/src"
+    target="_blank"
+    >built</a
+  >
+  on <a href="https://livecodes.io/" target="_blank">LiveCodes</a>. (<a
+    href="https://github.com/hatemhosny/thealgorithms-javascript"
+    target="_blank"
+    >view on GitHub</a
+  >)
+</div>
 
 <script>
   const algorithms = [
@@ -385,7 +397,7 @@
   const params = new URLSearchParams(window.location.search);
   const selected =
     (params.get("algorithm") &&
-    algorithms.find((algorithm) => algorithm === params.get("algorithm"))) ||
+      algorithms.find((algorithm) => algorithm === params.get("algorithm"))) ||
     "Search/BinarySearch";
   document.getElementById(selected).selected = true;
 </script>
