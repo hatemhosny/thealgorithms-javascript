@@ -9,6 +9,12 @@ a {
   text-decoration: none;
   color: royalblue;
 }
+h1 a {
+  color: unset;
+}
+h1 a:hover {
+  text-decoration: underline;
+}
 #container {
   height: 90vh;
 }
