@@ -44,8 +44,8 @@ const loadAlgorithm = async () => {
   playground = await createPlayground("#container", {
     appUrl: "https://v13.livecodes.io/",
     config: {
-      activeEditor: "script",
       title: name,
+      languages: ["javascript"],
       script: {
         language: "javascript",
         content: script,
@@ -55,7 +55,7 @@ const loadAlgorithm = async () => {
         content: test || "",
       },
       tools: {
-        enabled: "all",
+        enabled: ['console', 'tests'],
         active: "tests",
         status: "full",
       },
