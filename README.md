@@ -4,9 +4,11 @@ This project provides a client-side code playground to allow editing, running an
 
 [Open the Playground 🚀](https://hatemhosny.github.io/thealgorithms-javascript/)
 
-The source code can be found in the [`gh-pages` branch](https://github.com/hatemhosny/thealgorithms-javascript/tree/gh-pages) ([Edit in LiveCodes ✏️](https://livecodes.io/?activeEditor=script&x=https://github.com/hatemhosny/thealgorithms-javascript/tree/gh-pages/src)).
-
 The project is built using [LiveCodes](https://livecodes.io/), the [feature-rich](https://livecodes.io/docs/features/), [open-source](https://github.com/live-codes/livecodes), [client-side](https://livecodes.io/docs/why#client-side) code playground. Code and tests are imported form [The Algorithms - JavaScript](https://github.com/TheAlgorithms/JavaScript) repo and are added to the playground using LiveCodes [SDK](https://livecodes.io/docs/sdk). Tests run locally in the browser using LiveCodes [test runner](https://livecodes.io/docs/features/tests) (which uses [Jest](https://jestjs.io/)). The playground is deployed to GitHub Pages using the LiveCodes [deploy](https://livecodes.io/docs/features/deploy) feature!
+
+## Source Code
+
+The source code can be found in the [`gh-pages` branch](https://github.com/hatemhosny/thealgorithms-javascript/tree/gh-pages) ([Edit in LiveCodes ✏️](https://livecodes.io/?activeEditor=script&x=https://github.com/hatemhosny/thealgorithms-javascript/tree/gh-pages/src)).
 
 ## How is that different from the official [playground](https://the-algorithms.com/playground?algorithm=binary-search&language=javascript)?
 
