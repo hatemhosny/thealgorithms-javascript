@@ -57,7 +57,7 @@ const loadAlgorithm = async (initialLoad = false) => {
         content: test || "",
       },
       tools: {
-        enabled: ['console', 'tests'],
+        enabled: ['console', 'tests', ...(window.lang.name === 'typescript' ? ['compiled'] : [])],
         active: "tests",
         status: "full",
       },
