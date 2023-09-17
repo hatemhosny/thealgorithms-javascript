@@ -1,7 +1,6 @@
 import { createPlayground } from "https://unpkg.com/livecodes@0.2.0/livecodes.js";
 
 let playground;
-const algorithmSelect = document.getElementById("algorithm-select");
 
 const getContent = async (url) => {
   const pathname = new URL(url).pathname.slice(1);
@@ -30,10 +29,10 @@ const getContent = async (url) => {
   return { script, test, name };
 };
 
-const loadAlgorithm = async (initialLoad = false) => {
-  const algorithm = algorithmSelect.value;
+const loadAlgorithm = async () => {
+  const algorithm = window.algorithmSelect.value;
   const algorithmUrl = `${window.lang.repo}/blob/master/${algorithm}.${window.lang.ext}`;
-  if (!initialLoad) {
+  if (playground) {
     history.pushState(
       {},
       "",
@@ -43,23 +42,27 @@ const loadAlgorithm = async (initialLoad = false) => {
   const { script, test, name } = await getContent(algorithmUrl);
 
   const config = {
-      title: name,
-      languages: [window.lang.name],
-      script: {
-        language: window.lang.name,
-        content: script,
-      },
-      tests: {
-        language: window.lang.name,
-        content: test || "",
-      },
-      tools: {
-        enabled: ['console', 'tests', ...(window.lang.name === 'typescript' ? ['compiled'] : [])],
-        active: "tests",
-        status: "full",
-      },
-      autotest: true,
-    };
+    title: name,
+    languages: [window.lang.name],
+    script: {
+      language: window.lang.name,
+      content: script,
+    },
+    tests: {
+      language: window.lang.name,
+      content: test || "",
+    },
+    tools: {
+      enabled: [
+        "console",
+        "tests",
+        ...(window.lang.name === "typescript" ? ["compiled"] : []),
+      ],
+      active: "tests",
+      status: "full",
+    },
+    autotest: true,
+  };
 
   if (!playground) {
     playground = await createPlayground("#container", {
@@ -71,5 +74,5 @@ const loadAlgorithm = async (initialLoad = false) => {
   }
 };
 
-algorithmSelect.addEventListener("change", loadAlgorithm);
-loadAlgorithm(true);
+window.algorithmSelect.addEventListener("change", loadAlgorithm);
+loadAlgorithm();
