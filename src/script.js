@@ -31,7 +31,6 @@ const getContent = async (url) => {
 };
 
 const loadAlgorithm = async (initialLoad = false) => {
-  await playground?.destroy();
   const algorithm = algorithmSelect.value;
   const algorithmUrl = `${window.lang.repo}/blob/master/${algorithm}.${window.lang.ext}`;
   if (!initialLoad) {
@@ -43,9 +42,7 @@ const loadAlgorithm = async (initialLoad = false) => {
   }
   const { script, test, name } = await getContent(algorithmUrl);
 
-  playground = await createPlayground("#container", {
-    appUrl: "https://v14.livecodes.io/",
-    config: {
+  const config = {
       title: name,
       languages: [window.lang.name],
       script: {
@@ -62,8 +59,16 @@ const loadAlgorithm = async (initialLoad = false) => {
         status: "full",
       },
       autotest: true,
-    },
-  });
+    };
+
+  if (!playground) {
+    playground = await createPlayground("#container", {
+      appUrl: "https://v14.livecodes.io/",
+      config,
+    });
+  } else {
+    playground.setConfig(config);
+  }
 };
 
 algorithmSelect.addEventListener("change", loadAlgorithm);
