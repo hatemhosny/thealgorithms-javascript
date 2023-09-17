@@ -21,7 +21,7 @@ const getContent = async (url) => {
     fetch(testUrl).then(async (res) =>
       res.ok
         ? (await res.text()).replace(
-            /import (.*?) from '.*?'/g,
+            /import (.*?) from ('|").*?('|")/g,
             "import $1 from './script'",
           )
         : null,
@@ -30,28 +30,30 @@ const getContent = async (url) => {
   return { script, test, name };
 };
 
-const loadAlgorithm = async () => {
+const loadAlgorithm = async (initialLoad = false) => {
   await playground?.destroy();
   const algorithm = algorithmSelect.value;
-  const algorithmUrl = `https://github.com/TheAlgorithms/JavaScript/blob/master/${algorithm}.js`;
-  history.pushState(
-    {},
-    "",
-    `${location.origin}${location.pathname}?algorithm=${algorithm}`,
-  );
+  const algorithmUrl = `${window.lang.repo}/blob/master/${algorithm}.${window.lang.ext}`;
+  if (!initialLoad) {
+    history.pushState(
+      {},
+      "",
+      `${location.origin}${location.pathname}?lang=${window.lang.ext}&algorithm=${algorithm}`,
+    );
+  }
   const { script, test, name } = await getContent(algorithmUrl);
 
   playground = await createPlayground("#container", {
-    appUrl: "https://v13.livecodes.io/",
+    appUrl: "https://v14.livecodes.io/",
     config: {
       title: name,
-      languages: ["javascript"],
+      languages: [window.lang.name],
       script: {
-        language: "javascript",
+        language: window.lang.name,
         content: script,
       },
       tests: {
-        language: "javascript",
+        language: window.lang.name,
         content: test || "",
       },
       tools: {
@@ -59,9 +61,10 @@ const loadAlgorithm = async () => {
         active: "tests",
         status: "full",
       },
+      autotest: true,
     },
   });
 };
 
 algorithmSelect.addEventListener("change", loadAlgorithm);
-loadAlgorithm();
+loadAlgorithm(true);

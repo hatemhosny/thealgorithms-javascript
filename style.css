@@ -4,6 +4,8 @@ body {
 }
 h1 {
   font-size: 1.5em;
+  text-align: left;
+  margin-left: 1rem;
 }
 a {
   text-decoration: none;
@@ -14,6 +16,10 @@ h1 a {
 }
 h1 a:hover {
   text-decoration: underline;
+}
+.languages {
+  text-align: left;
+  margin-left: 1rem;
 }
 #container {
   height: 90vh;

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Algorithms - JavaScript&nbsp;Playground</title><link rel="stylesheet" href="./style.css"></head><body><h1><a href="./">The Algorithms - JavaScript Playground</a></h1>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Algorithms - JS/TS Playground</title><link rel="stylesheet" href="./style.css"></head><body><h1>
+  <a id="title-link">The Algorithms Playground - <span id="language">JavaScript</span></a>
+</h1>
+<p class="languages">Switch to: <a id="other-lang-link"></a></p>
 <p>
   Algorithm:
   <select id="algorithm-select"></select>
-  <br>
-  (<a href="https://github.com/TheAlgorithms/JavaScript" target="_blank">Source</a>)
 </p>
+<p>(<a target="_blank" id="source-link">Source</a>)</p>
 <div id="container" style="height: 80vh"></div>
 
 <div id="footer">
@@ -24,7 +26,7 @@
 </div>
 
 <script>
-  const algorithms = [
+  const jsAlgorithms = [
     "Backtracking/AllCombinationsOfSizeK",
     "Backtracking/GeneratePermutations",
     "Backtracking/KnightTour",
@@ -385,7 +387,128 @@
     "Trees/DepthFirstSearch",
     "Trees/FenwickTree",
   ];
-  const algorithmSelect = document.getElementById("algorithm-select");
+
+  const tsAlgorithms = [
+    "backtracking/all-combinations-of-size-k",
+    "ciphers/xor_cipher",
+    "data_structures/disjoint_set/disjoint_set",
+    "data_structures/heap/heap",
+    "data_structures/list/doubly_linked_list",
+    "data_structures/list/linked_list",
+    "data_structures/list/singly_linked_list",
+    "data_structures/list/test/linked_list",
+    "data_structures/map/hash_map",
+    "data_structures/map/map",
+    "data_structures/queue/array_queue",
+    "data_structures/queue/circular_queue",
+    "data_structures/queue/linked_queue",
+    "data_structures/queue/queue",
+    "data_structures/queue/stack_queue",
+    "data_structures/queue/test/queue",
+    "data_structures/set/hash_map_set",
+    "data_structures/set/map_set",
+    "data_structures/set/set",
+    "data_structures/stack/linked_list_stack",
+    "data_structures/stack/stack",
+    "data_structures/tree/binary_search_tree",
+    "dynamic_programming/knapsack",
+    "graph/bellman_ford",
+    "graph/dijkstra",
+    "graph/floyd_warshall",
+    "graph/johnson",
+    "graph/kruskal",
+    "graph/prim",
+    "maths/absolute_value",
+    "maths/aliquot_sum",
+    "maths/armstrong_number",
+    "maths/binary_convert",
+    "maths/binomial_coefficient",
+    "maths/calculate_mean",
+    "maths/calculate_median",
+    "maths/degrees_to_radians",
+    "maths/digit_sum",
+    "maths/factorial",
+    "maths/factors",
+    "maths/fibonacci",
+    "maths/find_min",
+    "maths/greatest_common_factor",
+    "maths/hamming_distance",
+    "maths/is_divisible",
+    "maths/is_even",
+    "maths/is_leap_year",
+    "maths/is_odd",
+    "maths/is_palindrome",
+    "maths/is_square_free",
+    "maths/juggler_sequence",
+    "maths/lowest_common_multiple",
+    "maths/number_of_digits",
+    "maths/pascals_triangle",
+    "maths/perfect_cube",
+    "maths/perfect_square",
+    "maths/primes",
+    "maths/pronic_number",
+    "maths/radians_to_degrees",
+    "maths/sieve_of_eratosthenes",
+    "maths/signum",
+    "maths/zellers_congruence",
+    "maths/series/hexagonal_numbers",
+    "other/is_sorted_array",
+    "other/parse_nested_brackets",
+    "other/shuffle_array",
+    "search/binary_search",
+    "search/jump_search",
+    "search/linear_search",
+    "sorts/bogo_sort",
+    "sorts/bubble_sort",
+    "sorts/cycle_sort",
+    "sorts/gnome_sort",
+    "sorts/insertion_sort",
+    "sorts/merge_sort",
+    "sorts/quick_select",
+    "sorts/quick_sort",
+    "sorts/selection_sort",
+    "sorts/shell_sort",
+  ];
+
+  const params = new URLSearchParams(window.location.search);
+  window.languages = [
+    {
+      name: "javascript",
+      title: "JavaScript",
+      ext: "js",
+      repo: "https://github.com/TheAlgorithms/JavaScript",
+      algorithms: jsAlgorithms,
+      defaultAlgorithm: "Search/BinarySearch",
+    },
+    {
+      name: "typescript",
+      title: "TypeScript",
+      ext: "ts",
+      repo: "https://github.com/TheAlgorithms/TypeScript",
+      algorithms: tsAlgorithms,
+      defaultAlgorithm: "search/binary_search",
+    },
+  ];
+
+  window.lang =
+    window.languages.find((language) =>
+      [language.name, language.ext, language.title].includes(
+        params.get("lang"),
+      ),
+    ) || window.languages[0];
+
+  document.getElementById("title-link").href = `?lang=${window.lang.ext}`;
+
+  window.algorithmSelect = document.getElementById("algorithm-select");
+  document.getElementById("source-link").href = window.lang.repo;
+  document.getElementById("language").innerText = window.lang.title;
+
+  const otherLang = window.languages.find((lang) => lang !== window.lang);
+  document.getElementById("other-lang-link").innerText = otherLang.title;
+  document.getElementById("other-lang-link").href = `?lang=${otherLang.ext}`;
+
+  const algorithms = window.lang.algorithms;
+
   algorithms.forEach((algorithm) => {
     const option = document.createElement("option");
     option.value = algorithm;
@@ -394,11 +517,10 @@
     algorithmSelect.appendChild(option);
   });
 
-  const params = new URLSearchParams(window.location.search);
   const selected =
     (params.get("algorithm") &&
       algorithms.find((algorithm) => algorithm === params.get("algorithm"))) ||
-    "Search/BinarySearch";
+    window.lang.defaultAlgorithm;
   document.getElementById(selected).selected = true;
 </script>
 <script src="./script.js" type="module"></script></body></html>
